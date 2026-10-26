@@ -6,7 +6,7 @@
 
 > *The ocean already has its guardians. We simply help them protect it.*
 
-🌐 **[View the project website](https://preksha-05.github.io/M.A.N.T.A---MARINE-AUTONOMOUS-NEUTRALIZATION-TRACKING-ARRAY/)**
+🌐 **[View the project website](https://preksha-05.github.io/M.A.N.T.A---MARINE-AUTONOMOUS-NEUTRALIZATION-TRACKING-ARRAY-/)**
 
 ![MANTA attached to a humpback whale](images/hero.jpg)
 
