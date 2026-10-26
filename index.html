@@ -1,0 +1,714 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>MANTA | Marine Autonomous Neutralization &amp; Tracking Array</title>
+    <meta
+      name="description"
+      content="MANTA is a speculative design concept that turns whale migration into a living network for monitoring and localized intervention against ocean acidification."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --abyss: #030914;
+        --deep: #061428;
+        --panel: #0a1d36;
+        --line: rgb(87 226 240 / 18%);
+        --cyan: #4fe3f0;
+        --cyan-soft: #9ff3fa;
+        --text: #d6e6f2;
+        --muted: #8aa3b8;
+        --radius: 18px;
+        --pad: clamp(20px, 6vw, 96px);
+        --max: 1200px;
+      }
+
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+
+      body {
+        margin: 0;
+        background: var(--abyss);
+        color: var(--text);
+        font-family: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+        font-size: 18px;
+        line-height: 1.65;
+        overflow-x: hidden;
+      }
+
+      img { display: block; max-width: 100%; }
+      a { color: inherit; }
+      h1, h2, h3, p, ul, ol, figure { margin: 0; }
+
+      .wordmark {
+        font-family: Montserrat, Inter, sans-serif;
+        font-weight: 500;
+        letter-spacing: 0.32em;
+      }
+
+      h2 {
+        color: #fff;
+        font-size: clamp(30px, 4vw, 50px);
+        font-weight: 600;
+        line-height: 1.15;
+        letter-spacing: -0.01em;
+        max-width: 900px;
+      }
+
+      h3 { color: #fff; font-size: 17px; font-weight: 600; letter-spacing: 0.04em; }
+
+      .wrap { width: min(100%, var(--max)); margin: 0 auto; }
+      section { position: relative; padding: clamp(72px, 10vw, 130px) var(--pad); }
+
+      .eyebrow {
+        display: inline-block;
+        margin-bottom: 18px;
+        padding-bottom: 6px;
+        border-bottom: 2px solid var(--cyan);
+        color: var(--cyan);
+        font-size: 13px;
+        font-weight: 600;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+      }
+
+      .lead { margin-top: 22px; max-width: 760px; font-size: clamp(18px, 1.7vw, 21px); color: var(--muted); }
+      .accent { color: var(--cyan); }
+
+      .zoom { cursor: zoom-in; }
+
+      /* ---------- Header ---------- */
+      header {
+        position: fixed;
+        inset: 0 0 auto;
+        z-index: 20;
+        padding: 16px var(--pad);
+        background: linear-gradient(rgb(3 9 20 / 85%), rgb(3 9 20 / 0%));
+        transition: background 0.3s ease;
+      }
+
+      header.solid { background: rgb(3 9 20 / 92%); backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
+      header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+
+      .brand { display: flex; align-items: center; gap: 12px; color: #fff; font-size: 18px; text-decoration: none; }
+
+      .brand svg { width: 30px; height: 22px; }
+
+      nav { display: flex; gap: 2px; }
+
+      nav a {
+        padding: 6px 12px;
+        border-radius: 999px;
+        color: var(--muted);
+        font-size: 13px;
+        font-weight: 500;
+        letter-spacing: 0.04em;
+        text-decoration: none;
+      }
+
+      nav a:hover { color: var(--cyan); }
+
+      /* ---------- Hero ---------- */
+      .hero { padding: 0; }
+
+      .hero-image {
+        position: relative;
+        height: min(92vh, 900px);
+        min-height: 480px;
+        background: url("images/hero.jpg") center 30% / cover no-repeat;
+      }
+
+      .hero-image::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, rgb(3 9 20 / 0%) 55%, var(--abyss) 100%);
+      }
+
+      .hero-text { position: relative; z-index: 1; margin-top: -120px; padding: 0 var(--pad) clamp(56px, 8vw, 100px); }
+
+      .hero h1 {
+        color: #fff;
+        font-size: clamp(54px, 10vw, 130px);
+        line-height: 1;
+      }
+
+      .hero .full-name {
+        display: block;
+        margin-top: 16px;
+        color: var(--cyan);
+        font-size: clamp(14px, 1.6vw, 18px);
+        font-weight: 600;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+      }
+
+      .hero .lead { color: var(--text); }
+
+      .tags { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 30px; }
+
+      .tags span {
+        padding: 7px 16px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        color: var(--cyan-soft);
+        font-size: 14px;
+      }
+
+      /* ---------- Challenge ---------- */
+      .challenge { background: #fff; color: #1d2b38; }
+      .challenge h2 { color: #071526; }
+      .challenge .eyebrow { color: #071526; border-color: #071526; }
+
+      .challenge-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        gap: clamp(32px, 6vw, 80px);
+        align-items: center;
+      }
+
+      .challenge p { margin-top: 20px; font-size: 18px; color: #3b4b5a; }
+
+      .challenge .big {
+        font-size: clamp(64px, 9vw, 120px);
+        font-weight: 700;
+        line-height: 1;
+        color: #071526;
+      }
+
+      .challenge .big small { display: block; margin-top: 10px; font-size: 16px; font-weight: 500; color: #3b4b5a; }
+
+      /* ---------- Concept ---------- */
+      .concept .wide-image {
+        margin-top: 56px;
+        border-radius: var(--radius);
+        overflow: hidden;
+        border: 1px solid var(--line);
+      }
+
+      .concept .wide-image img { width: 100%; }
+      .concept .wide-image figcaption,
+      .figure-note { padding: 14px 4px 0; font-size: 14px; color: var(--muted); }
+
+      .capabilities {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 40px;
+      }
+
+      .capabilities span {
+        padding: 10px 18px;
+        border-radius: 10px;
+        background: var(--panel);
+        border-bottom: 2px solid var(--cyan);
+        color: var(--cyan-soft);
+        font-size: 15px;
+        font-weight: 500;
+      }
+
+      /* ---------- Why whales ---------- */
+      .why { background: var(--deep); }
+
+      .why-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+        gap: clamp(32px, 6vw, 80px);
+        align-items: center;
+      }
+
+      .why .stat { margin-top: 32px; display: flex; gap: 40px; flex-wrap: wrap; }
+      .why .stat strong { display: block; color: var(--cyan); font-size: clamp(36px, 4vw, 52px); font-weight: 600; line-height: 1; }
+      .why .stat small { display: block; margin-top: 8px; color: var(--muted); font-size: 14px; }
+
+      .why figure img { width: 100%; border-radius: var(--radius); }
+
+      /* ---------- How it works ---------- */
+      .steps {
+        display: grid;
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+        gap: 14px;
+        margin-top: 56px;
+        padding: 0;
+        list-style: none;
+      }
+
+      .steps li { position: relative; }
+
+      .steps img {
+        width: 100%;
+        aspect-ratio: 1;
+        object-fit: cover;
+        border: 1px solid var(--line);
+        border-radius: 14px;
+      }
+
+      .steps li:not(:last-child)::after {
+        content: "\2192";
+        position: absolute;
+        top: calc(50% - 60px);
+        right: -13px;
+        z-index: 1;
+        color: var(--cyan);
+        font-size: 16px;
+      }
+
+      .steps h3 { margin-top: 16px; text-transform: uppercase; }
+      .steps h3 span { color: var(--cyan); margin-right: 6px; }
+      .steps p { margin-top: 6px; font-size: 14.5px; line-height: 1.5; color: var(--muted); }
+
+      .intervention {
+        display: grid;
+        grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+        gap: clamp(28px, 4vw, 56px);
+        align-items: center;
+        margin-top: clamp(56px, 8vw, 96px);
+      }
+
+      .intervention img { width: 100%; border-radius: var(--radius); border: 1px solid var(--line); }
+      .intervention p { margin-top: 14px; color: var(--muted); }
+
+      /* ---------- Components ---------- */
+      .components { background: #fff; color: #1d2b38; }
+      .components h2 { color: #071526; }
+      .components .eyebrow { color: #00a7b8; border-color: #00a7b8; }
+
+      .comp-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+        gap: clamp(32px, 6vw, 80px);
+        align-items: center;
+        margin-top: 48px;
+      }
+
+      .comp-list { padding: 0; list-style: none; counter-reset: c; }
+
+      .comp-list li {
+        display: grid;
+        grid-template-columns: 52px 1fr;
+        gap: 4px 12px;
+        padding: 18px 0;
+        border-bottom: 1px solid #e3eaf0;
+        counter-increment: c;
+      }
+
+      .comp-list li::before {
+        content: "0" counter(c);
+        grid-row: span 2;
+        color: #00a7b8;
+        font-size: 24px;
+        font-weight: 600;
+        line-height: 1.1;
+      }
+
+      .comp-list h3 { color: #00a7b8; text-transform: uppercase; font-size: 15.5px; }
+      .comp-list p { font-size: 16px; color: #3b4b5a; }
+
+      /* ---------- Views ---------- */
+      .views-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px;
+        margin-top: 56px;
+      }
+
+      .view {
+        display: grid;
+        place-items: center;
+        padding: 28px 20px 22px;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: radial-gradient(circle at 50% 40%, #0b2340, var(--abyss) 75%);
+      }
+
+      .view img { width: 100%; max-width: 520px; }
+      .view figcaption { margin-top: 14px; color: var(--cyan); font-size: 13px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; }
+
+      .in-context { display: grid; gap: 18px; margin-top: 18px; }
+      .in-context img { width: 100%; border-radius: var(--radius); border: 1px solid var(--line); }
+
+      /* ---------- Identity ---------- */
+      .identity { background: var(--deep); }
+
+      .logo-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px;
+        margin-top: 48px;
+      }
+
+      .logo-grid figure {
+        display: grid;
+        place-items: center;
+        padding: 32px;
+        border-radius: var(--radius);
+        background: #fff;
+      }
+
+      .logo-grid img { max-height: 260px; width: auto; }
+      .logo-grid figcaption { margin-top: 14px; color: #3b4b5a; font-size: 14px; }
+
+      /* ---------- Posters ---------- */
+      .poster-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; margin-top: 48px; }
+      .poster-grid img { width: 100%; border-radius: 12px; border: 1px solid var(--line); }
+
+      /* ---------- Closing ---------- */
+      .closing { text-align: center; background: radial-gradient(ellipse at 50% 120%, #0b3550, var(--abyss) 70%); }
+      .closing h2 { margin: 0 auto; font-size: clamp(28px, 3.6vw, 44px); }
+      .closing .lead { margin-left: auto; margin-right: auto; }
+      .closing .motto { margin-top: 40px; color: var(--cyan); font-size: clamp(20px, 2.2vw, 26px); }
+
+      footer {
+        padding: 40px var(--pad);
+        border-top: 1px solid var(--line);
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; }
+      footer .ai-note { max-width: 640px; }
+
+      /* ---------- Lightbox ---------- */
+      .lightbox {
+        position: fixed;
+        inset: 0;
+        z-index: 50;
+        display: none;
+        place-items: center;
+        padding: 20px;
+        background: rgb(2 6 14 / 94%);
+        cursor: zoom-out;
+      }
+
+      .lightbox.open { display: grid; }
+      .lightbox img { max-width: 100%; max-height: 94vh; border-radius: 10px; }
+
+      /* ---------- Reveal ---------- */
+      .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.8s ease, transform 0.8s ease; }
+      .reveal.visible { opacity: 1; transform: none; }
+
+      @media (prefers-reduced-motion: reduce) {
+        html { scroll-behavior: auto; }
+        .reveal { opacity: 1; transform: none; transition: none; }
+      }
+
+      /* ---------- Responsive ---------- */
+      @media (max-width: 1000px) {
+        nav { display: none; }
+        .challenge-grid, .why-grid, .intervention, .comp-grid { grid-template-columns: 1fr; }
+        .steps { grid-template-columns: repeat(3, minmax(0, 1fr)); row-gap: 32px; }
+        .steps li::after { display: none; }
+        .comp-grid figure { max-width: 460px; margin: 0 auto; }
+      }
+
+      @media (max-width: 640px) {
+        body { font-size: 16px; }
+        .hero-image { height: 62vh; min-height: 360px; }
+        .hero-text { margin-top: -60px; }
+        .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .views-grid, .logo-grid, .poster-grid { grid-template-columns: 1fr; }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="wrap">
+        <a class="brand" href="#top">
+          <svg viewBox="0 0 60 40" aria-hidden="true">
+            <path d="M30 38 C27 22 18 10 2 4 C12 14 20 20 30 38 Z M30 38 C33 22 42 10 58 4 C48 14 40 20 30 38 Z" fill="#4fe3f0" />
+          </svg>
+          <span class="wordmark">MANTA</span>
+        </a>
+        <nav aria-label="Page sections">
+          <a href="#challenge">Challenge</a>
+          <a href="#concept">Concept</a>
+          <a href="#how">How it works</a>
+          <a href="#components">Components</a>
+          <a href="#views">Views</a>
+          <a href="#identity">Identity</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="top">
+      <!-- ================= HERO ================= -->
+      <section class="hero">
+        <div class="hero-image" role="img" aria-label="Humpback whale swimming with the MANTA device attached to its back"></div>
+        <div class="hero-text">
+          <div class="wrap reveal">
+            <h1 class="wordmark">MANTA</h1>
+            <span class="full-name">Marine Autonomous Neutralization &amp; Tracking Array</span>
+            <p class="lead">
+              An ocean restoration platform that transforms whale migration into a living network
+              for monitoring and localized intervention against ocean acidification.
+            </p>
+            <div class="tags">
+              <span>Speculative Design</span>
+              <span>Biomimicry</span>
+              <span>Ocean Tech</span>
+              <span>AI-rendered concept visuals</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= CHALLENGE ================= -->
+      <section class="challenge" id="challenge">
+        <div class="wrap challenge-grid reveal">
+          <div>
+            <span class="eyebrow">The challenge</span>
+            <h2>Oceans are becoming increasingly acidic.</h2>
+            <p>
+              Every year, the ocean absorbs nearly one-third of human-generated carbon dioxide.
+              This changes seawater chemistry, reducing pH and making it increasingly difficult for
+              marine ecosystems to survive.
+            </p>
+            <p>
+              As acidification spreads, corals weaken, shell-forming organisms struggle to build
+              protective shells, and entire marine food webs become increasingly vulnerable.
+            </p>
+          </div>
+          <div class="big">
+            ⅓
+            <small>of human-generated CO₂ is absorbed by the ocean every year</small>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= CONCEPT ================= -->
+      <section class="concept" id="concept">
+        <div class="wrap reveal">
+          <span class="eyebrow">The concept</span>
+          <h2>The ocean already has its guardians. <span class="accent">We simply help them protect it.</span></h2>
+          <p class="lead">
+            MANTA detects local chemical stress and delivers precise, minimal interventions only
+            where needed. Data is recorded, transmitted and analysed to continuously improve
+            decisions and outcomes.
+          </p>
+
+          <div class="capabilities">
+            <span>Continuous Ocean pH Monitoring</span>
+            <span>Autonomous Acidification Detection</span>
+            <span>Targeted pH Neutralization</span>
+            <span>Whale Migration Tracking</span>
+            <span>Environmental Data Collection</span>
+            <span>Precision Chemical Dispersion</span>
+            <span>Ocean Health Mapping</span>
+          </div>
+
+          <figure class="wide-image zoom">
+            <img src="images/attached.jpg" alt="MANTA attached to the back of a humpback whale underwater" loading="lazy" />
+          </figure>
+          <p class="figure-note">Attached to whale: the device sits on the whale's back like a second skin.</p>
+        </div>
+      </section>
+
+      <!-- ================= WHY WHALES ================= -->
+      <section class="why">
+        <div class="wrap why-grid reveal">
+          <div>
+            <span class="eyebrow">Why whales?</span>
+            <h2>Nature's own ocean-crossing network.</h2>
+            <p class="lead">
+              Whales naturally travel over 4,000–6,500 miles every year, crossing some of the least
+              monitored regions of the world's oceans. Their predictable migration transforms them
+              into ideal mobile platforms for environmental sensing.
+            </p>
+            <p class="lead">
+              Instead of introducing new infrastructure, MANTA works with an existing natural system.
+            </p>
+            <div class="stat">
+              <div><strong>4,000–6,500</strong><small>miles travelled every year</small></div>
+            </div>
+          </div>
+          <figure class="zoom">
+            <img src="images/whale-underwater.jpg" alt="Humpback whale with MANTA swimming through sunlit water" loading="lazy" />
+          </figure>
+        </div>
+      </section>
+
+      <!-- ================= HOW IT WORKS ================= -->
+      <section id="how">
+        <div class="wrap reveal">
+          <span class="eyebrow">How it works</span>
+          <h2>Sense. Decide. Act. Learn.</h2>
+
+          <ol class="steps">
+            <li>
+              <img src="images/step-1.jpg" alt="Sensor signal on an ocean grid" loading="lazy" />
+              <h3><span>1</span>Sense</h3>
+              <p>Sensors continuously measure pH, temperature, CO₂, salinity and more.</p>
+            </li>
+            <li>
+              <img src="images/step-2.jpg" alt="Map with a location marker over stress zones" loading="lazy" />
+              <h3><span>2</span>Analyze</h3>
+              <p>AI onboard analyses data in real time to identify stress zones.</p>
+            </li>
+            <li>
+              <img src="images/step-3.jpg" alt="Target reticle over a heat map" loading="lazy" />
+              <h3><span>3</span>Decide</h3>
+              <p>The system predicts impact and decides the exact intervention needed.</p>
+            </li>
+            <li>
+              <img src="images/step-4.jpg" alt="MANTA nozzle releasing a fine mist" loading="lazy" />
+              <h3><span>4</span>Neutralize</h3>
+              <p>A micro-dose of neutralizing compound is released only where needed.</p>
+            </li>
+            <li>
+              <img src="images/step-5.jpg" alt="Map with a check mark showing improvement" loading="lazy" />
+              <h3><span>5</span>Verify</h3>
+              <p>Post-intervention data confirms improvement in local water quality.</p>
+            </li>
+            <li>
+              <img src="images/step-6.jpg" alt="Satellite receiving a signal from Earth" loading="lazy" />
+              <h3><span>6</span>Transmit</h3>
+              <p>Data and outcomes are sent via satellite for global analysis.</p>
+            </li>
+          </ol>
+
+          <div class="intervention">
+            <figure class="zoom">
+              <img src="images/intervention.jpg" alt="Whale with MANTA and a close-up of the device releasing a micro-dose" loading="lazy" />
+            </figure>
+            <div>
+              <span class="eyebrow">Targeted micro intervention</span>
+              <p>
+                MANTA releases a precise micro-dose of neutralizing compound to elevate pH and
+                stabilize the surrounding water, acting only where chemical stress is detected.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= COMPONENTS ================= -->
+      <section class="components" id="components">
+        <div class="wrap reveal">
+          <span class="eyebrow">Component dissection</span>
+          <h2>Seven layers, one second skin.</h2>
+          <div class="comp-grid">
+            <figure class="zoom">
+              <img src="images/exploded.jpg" alt="Exploded view of MANTA showing its seven layers from smart skin to hydrodynamic base" loading="lazy" />
+            </figure>
+            <ol class="comp-list">
+              <li><h3>Smart Skin</h3><p>Flexible, solar-integrated outer layer; hydrodynamic and bio-inspired to move seamlessly with the whale.</p></li>
+              <li><h3>Communication Suite</h3><p>Satellite uplink for real-time data transmission: low power, long range, connectivity anywhere in the ocean.</p></li>
+              <li><h3>AI &amp; Control Core</h3><p>Onboard AI for adaptive decision making, target selection and efficient power management.</p></li>
+              <li><h3>Sensor Suite</h3><p>Multi-parameter sensors monitor water quality, pH, temperature, salinity, turbidity and dissolved oxygen.</p></li>
+              <li><h3>Neutralization Module</h3><p>Micro-dose chemical cartridge that stores neutralizing compound for targeted interventions.</p></li>
+              <li><h3>Micro Pump Array</h3><p>Precision micro pumps deliver exact doses with uniform dispersion and minimal waste.</p></li>
+              <li><h3>Hydrodynamic Base</h3><p>Smooth bio-inspired base for seamless attachment and natural movement with the whale.</p></li>
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= VIEWS ================= -->
+      <section id="views">
+        <div class="wrap reveal">
+          <span class="eyebrow">Multi-angle view</span>
+          <h2>Form follows the whale.</h2>
+          <div class="views-grid">
+            <figure class="view zoom"><img src="images/view-top.jpg" alt="MANTA top view" loading="lazy" /><figcaption>Top view</figcaption></figure>
+            <figure class="view zoom"><img src="images/view-rear.jpg" alt="MANTA rear view" loading="lazy" /><figcaption>Rear view</figcaption></figure>
+            <figure class="view zoom"><img src="images/view-side.jpg" alt="MANTA side view" loading="lazy" /><figcaption>Side view</figcaption></figure>
+            <figure class="view zoom"><img src="images/view-under.jpg" alt="MANTA underside view with attachment pads" loading="lazy" /><figcaption>Underside view</figcaption></figure>
+          </div>
+          <div class="in-context">
+            <figure class="zoom">
+              <img src="images/gallery.jpg" alt="Six renders of MANTA on whales from different angles, including a pod migrating together" loading="lazy" />
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= IDENTITY ================= -->
+      <section class="identity" id="identity">
+        <div class="wrap reveal">
+          <span class="eyebrow">Logo</span>
+          <h2>Drawn from the whale's tail.</h2>
+          <p class="lead">The MANTA mark abstracts a whale's fluke into a single, fluid cyan form.</p>
+          <div class="logo-grid">
+            <figure class="zoom"><img src="images/tail.jpg" alt="Whale tail rising from the water" loading="lazy" /><figcaption>Inspiration</figcaption></figure>
+            <figure class="zoom"><img src="images/logo-mark.jpg" alt="MANTA logo mark: a stylised cyan whale tail" loading="lazy" /><figcaption>Logo mark</figcaption></figure>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= POSTERS ================= -->
+      <section>
+        <div class="wrap reveal">
+          <span class="eyebrow">Presentation boards</span>
+          <h2>The full boards.</h2>
+          <p class="lead">Click to view at full size.</p>
+          <div class="poster-grid">
+            <figure class="zoom"><img src="images/poster-2.jpg" alt="MANTA presentation board 1: hero render, capabilities, multi-angle views and the challenge" loading="lazy" /></figure>
+            <figure class="zoom"><img src="images/poster-1.jpg" alt="MANTA presentation board 2: component dissection, why whales, logo and how it works" loading="lazy" /></figure>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= CLOSING ================= -->
+      <section class="closing">
+        <div class="wrap reveal">
+          <h2>The Ocean Already Has Its Guardians. We Simply Help Them Protect It.</h2>
+          <p class="lead">
+            MANTA is a speculative design concept that explores a future where whale migration
+            becomes a living network for ocean intelligence. By integrating autonomous sensing with
+            biomimetic design, it envisions technology that works alongside nature, expanding our
+            ability to monitor, understand, and respond to the changing health of our oceans.
+          </p>
+          <p class="motto">MANTA Makes Every Migration Matter.</p>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="wrap">
+        <p>MANTA · Designed by Preksha Anand</p>
+        <p class="ai-note">
+          Note: product and scene visuals were rendered with AI image tools for conceptualisation
+          only. MANTA is a speculative concept, not a working or tested device.
+        </p>
+      </div>
+    </footer>
+
+    <div class="lightbox" role="dialog" aria-label="Enlarged image" tabindex="-1">
+      <img alt="" />
+    </div>
+
+    <script>
+      const header = document.querySelector("header");
+      const onScroll = () => header.classList.toggle("solid", window.scrollY > 80);
+      window.addEventListener("scroll", onScroll, { passive: true });
+      onScroll();
+
+      const io = new IntersectionObserver(
+        (entries) => entries.forEach((e) => e.isIntersecting && e.target.classList.add("visible")),
+        { threshold: 0.08 }
+      );
+      document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+
+      const box = document.querySelector(".lightbox");
+      const boxImg = box.querySelector("img");
+      document.querySelectorAll(".zoom").forEach((fig) => {
+        fig.addEventListener("click", () => {
+          const img = fig.querySelector("img");
+          boxImg.src = img.src;
+          boxImg.alt = img.alt;
+          box.classList.add("open");
+          box.focus();
+        });
+      });
+      const close = () => box.classList.remove("open");
+      box.addEventListener("click", close);
+      document.addEventListener("keydown", (e) => e.key === "Escape" && close());
+    </script>
+  </body>
+</html>
